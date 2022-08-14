@@ -12,6 +12,8 @@
 
 
 - Download or clone this project
-- Install composer
-- Set env and run migration
-- Serve project
+- Install composer : ~ composer install
+- Set env and run migration : ~ php artisan migrate
+- Serve project : php artisan serve
+- http://127.0.0.1:8000/admin/login
+- username: admin@gmail.com, password: 12345678
