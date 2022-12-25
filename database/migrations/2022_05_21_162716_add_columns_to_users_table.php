@@ -19,12 +19,14 @@ return new class extends Migration
             $table->string('last_name',100)->nullable()->after('first_name');
             $table->tinyInteger('role')->default(0)->comment('0 = user, 1 = admin')->after('last_name');
             $table->string('image')->nullable()->after('role');
+            $table->tinyInteger('status')->default(1)->comment('0 = inactive, 1 = active');
         });
 
         DB::table('users')->insert([
             'name' => 'Admin',
             'role' => 1,
             'email' => env('ADMIN_EMAIL')?? 'admin@gmail.com',
+            'status' => 1,
             'password' => '$2y$10$QQjgPtbJpFSrXyNmObrMS.CRn8R09Z6yhRfis/bJqsfRK30Aii8AO',
         ]);
     }
@@ -40,6 +42,7 @@ return new class extends Migration
             $table->dropColumn('first_name');
             $table->dropColumn('last_name');
             $table->dropColumn('role');
+            $table->dropColumn('status');
             $table->dropColumn('image');
         });
     }

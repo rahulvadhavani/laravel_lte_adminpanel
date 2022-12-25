@@ -1,21 +1,19 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\ValidationException;
 
-class UpdateUserProfileImageRequest extends FormRequest
+class ChangePasswordRequest extends FormRequest
 {
-    protected function failedValidation(Validator $validator) { 
+    protected function failedValidation(Validator $validator)
+    {
         throw new HttpResponseException(
-          response()->json([
-            'status' => false,
-            'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
-          ], 200)
-        ); 
+            validatorError($validator)
+        );
     }
 
     /**
@@ -35,9 +33,10 @@ class UpdateUserProfileImageRequest extends FormRequest
      */
     public function rules()
     {
-
         return [
-            'image'  => 'required|image|mimes:jpeg,jpg,png|max:2000',
+            'old_password' => ['required'],
+            'password' => ['required', 'min:6'],
+            'password_confirmation' => ['required', 'same:password'],
         ];
     }
 }

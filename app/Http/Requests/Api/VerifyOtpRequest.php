@@ -1,21 +1,18 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class OtpVerificationRequest extends FormRequest
+class VerifyOtpRequest extends FormRequest
 {
-    protected function failedValidation(Validator $validator) { 
+    protected function failedValidation(Validator $validator)
+    {
         throw new HttpResponseException(
-          response()->json([
-            'status' => false,
-            'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
-          ], 200)
-        ); 
+            validatorError($validator)
+        );
     }
 
     /**
@@ -36,7 +33,8 @@ class OtpVerificationRequest extends FormRequest
     public function rules()
     {
         return [
-            'otp'  =>  'required|digits:4|exists:otp,otp',
+            'email' =>  ['required', 'email'],
+            'otp' =>  ['required', 'digits:6'],
         ];
     }
 }

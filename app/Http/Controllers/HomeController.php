@@ -101,7 +101,7 @@ class HomeController extends Controller
         try{
             $userId = Auth::user()->id;
             $user =User::where('id',$userId)->first();
-            $validatedData['password'] = Hash::make($request->password);
+            $validatedData['password'] = $request->password;
             $user->update($validatedData);
             return success('Password updated successfully');
             

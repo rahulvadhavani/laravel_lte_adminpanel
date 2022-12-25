@@ -41,5 +41,7 @@ Route::group(['middleware' => ['auth'],'prefix' => 'admin'], function () {
         Route::get('static-page/{slug}','getStaticPage');
         Route::post('update-static-page','postUpdateStaticPage')->name('static_page_update');
     });
-    
 });
+
+Route::get('verify-email/{id}', [\App\Http\Controllers\Api\v1\AuthController::class,'emailVerification']);
+

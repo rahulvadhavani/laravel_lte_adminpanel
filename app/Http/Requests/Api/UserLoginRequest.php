@@ -1,13 +1,20 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class ListRequest extends FormRequest
+class UserLoginRequest extends FormRequest
 {
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            validatorError($validator)
+        );
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -26,12 +33,8 @@ class ListRequest extends FormRequest
     public function rules()
     {
         return [
-            'model_name' => 'required',
+            'email'       =>  ['required', 'email'],
+            'password'    =>  ['required', 'min:6'],
         ];
-    }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json(['status' => false, 'errors' => $validator->errors()]));
     }
 }

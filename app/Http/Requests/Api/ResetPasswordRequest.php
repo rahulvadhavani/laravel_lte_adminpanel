@@ -1,21 +1,18 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UserLoginRequest extends FormRequest
+class ResetPasswordRequest extends FormRequest
 {
-    protected function failedValidation(Validator $validator) { 
+    protected function failedValidation(Validator $validator)
+    {
         throw new HttpResponseException(
-          response()->json([
-            'status' => false,
-            'message' => $validator->errors()->first(),
-            'errors' => $validator->errors()
-          ], 200)
-        ); 
+            validatorError($validator)
+        );
     }
 
     /**
@@ -36,9 +33,10 @@ class UserLoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email'       =>  'required',
-            'password'              =>  'required',
-            'device_token' =>  'nullable',
+            'email' => ['required', 'email'],
+            'otp' =>  ['required', 'digits:6'],
+            'password'  =>  ['required', 'min:6'],
+            'password_confirmation' =>  ['required', 'same:password'],
         ];
     }
 }

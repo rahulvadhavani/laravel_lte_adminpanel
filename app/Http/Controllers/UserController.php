@@ -54,10 +54,11 @@ class UserController extends Controller
                 $img = $this->FileUploadHelper($post_data['image'],'uploads/user');
                 $post_data['image'] = $img;
             }
-            if($request->password !=""){
-                $post_data['password'] =  Hash::make($request->password);
-            }else{
+            if($request->password == null){
                 unset($post_data['password']);
+            }
+            if($request->id == 0){
+                $post_data['email_verified_at'] = date('Y-m-d H:i:s'); 
             }
             if($user == null){
                 unset($post_data['id']);

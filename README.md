@@ -1,19 +1,58 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Laravel-lte-boilerplate
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
-
-## Installation and setup
+Laravel based Admin boilerplate
 
 
+## Features
 
-- Download or clone this project
-- Install composer : ~ composer install
-- Set env and run migration : ~ php artisan migrate
-- Serve project : php artisan serve
-- http://127.0.0.1:8000/admin/login
-- username: admin@gmail.com, password: 12345678
+- Development ready admin panel
+- Development ready API with authentication with passport 
+- Adminlte 3.2, Laravel(9.11)
+- Darkmode with theme customization
+- Moduler code
+- No need to Intall node module
+
+
+
+# Installation
+
+Note : Set Env. mail configuration for send otp email
+
+
+#### Clone this repo and install composer and setup env
+```bash
+composer install
+```
+    
+#### Migrate Database
+```bash
+php artisan migrate
+```
+  
+#### Install Passport Authentication
+```bash
+php artisan passport:install
+```
+
+#### Serve the project on localhost
+```bash
+php artisan serve
+```
+
+
+
+    
+## API Reference
+
+```
+Api Base url : http://localhost/projects/laravel_lte_adminpanel/public/api/v1
+```
+```
+Postman collection File : \storage\laravel-lte-boilerplate.postman_collection.json
+```
+
+## Reference
+
+
+[Adminlte](https://adminlte.io/themes/v3/)
+
