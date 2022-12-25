@@ -111,7 +111,7 @@
               </div>
               <div class="col-sm-2">
                 <div id="preview_div">
-                  <img id="image_preview" class="profile-user-img img-fluid img-circle admin_profile" src="">
+                  <img id="image_preview" width="70" height="70" class="profile-user-img img-fluid" src="">
                 </div>
               </div>
             </div>

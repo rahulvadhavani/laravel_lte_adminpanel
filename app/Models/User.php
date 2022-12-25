@@ -49,6 +49,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function ScopeUserRole($query,$withActive=false)
+    {
+        return $query->where('role', self::ROLEUSER)
+        ->when($withActive, function($query){
+            $query->where('email_verified_at','!=' ,null);
+        });
+    }
+
     public function getImageAttribute(){
         if (!$this->attributes['image']) {
             return url('dist/img/avatar.png');

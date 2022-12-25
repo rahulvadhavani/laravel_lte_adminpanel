@@ -1,5 +1,6 @@
 @extends('layouts.admin_app')
 @section('content')
+@include('admin.breadcrumb')
 <section class="content">
       <div class="container-fluid">
         <div class="row">

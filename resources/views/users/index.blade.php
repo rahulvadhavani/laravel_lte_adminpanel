@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="{{asset('plugins/sweetalert2/sweetalert2.min.css')}}">
 @endpush
 @section('content')
+@include('admin.breadcrumb')
 <section class="content">
   <div class="container-fluid">
     <div class="row">

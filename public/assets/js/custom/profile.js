@@ -134,3 +134,105 @@ $("#password_frm").validate({
         return false;
     }
 });
+
+$("#setting_frm").validate({
+    rules: {
+        support_email: {
+            required: true,email:true
+        },
+        contact: {
+            required: true,
+            minlength: 10,
+            maxlength: 10,
+            number:true
+        },
+        address: {
+            required: true,
+            minlength: 6
+        },
+        logo_image: {
+            accept: "image/jpg,image/jpeg,image/png"
+        },
+        facebook: {
+            url:true
+        },
+        twitter: {
+            url:true
+        },
+        linkedin: {
+            url:true
+        },
+        instagram: {
+            url:true
+        },
+    },
+    messages: {
+
+        old_password: {
+            required: "Please enter old password",
+            minlength: "Please enter old password atleast 6 character!"
+        },
+
+        support_email: {
+            required: 'Please enter support email',
+            email:'Support email should be valid email address.'
+        },
+        contact: {
+            required: 'Please enter support contact',
+            number:true
+        },
+        address: {
+            required: 'Please enter support address',
+            minlength: 'Please enter address atleast 6 character!'
+        },
+        logo_image: {
+            accept: 'Only allow image!'
+        },
+        facebook: {
+            url:'Facebook should be valid URL.'
+        },
+        twitter: {
+            url:'Twitter should be valid URL.'
+        },
+        linkedin: {
+            url:'Linkedin should be valid URL.'
+        },
+        instagram: {
+            url:'Instagram should be valid URL.'
+        },
+
+    },
+    submitHandler: function (form, e) {
+        e.preventDefault();
+        const formbtn = $('#setting_frm_btn');
+        const formloader = $('#setting_frm_loader');
+        $.ajax({
+            url: form.action,
+            type: "POST",
+            data: new FormData(form),
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            headers: { 'X-CSRF-TOKEN': csrf_token },
+            beforeSend: function () {
+                $(formloader).show();
+                $(formbtn).prop('disabled', true);
+            },
+            success: function (result) {
+                $(formloader).hide();
+                $(formbtn).prop('disabled', false);
+                if (result.status) {
+                    toastr.success(result.message);
+                } else {
+                    toastr.error(result.message);
+                }
+            },
+            error: function () {
+                toastr.error('Please Reload Page.');
+                $(formloader).hide();
+                $(formbtn).prop('disabled', false);
+            }
+        });
+        return false;
+    }
+});

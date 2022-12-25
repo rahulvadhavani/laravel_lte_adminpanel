@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\AdminProfileRequest;
-use App\Http\Requests\ChangePasswordRequest;
-use App\Http\Requests\StaticPageRequest;
+use App\Http\Requests\{AdminProfileRequest,AppSettingRequest,ChangePasswordRequest,StaticPageRequest};
+use App\Models\Setting;
 use App\Models\StaticPage;
 use Exception;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
@@ -22,15 +23,24 @@ class HomeController extends Controller
     public function index()
     {
         $title = 'Dashboard';
-        $total_user_count = User::count();
-        return view('admin.dashboard',compact('title'))->with('user_count',$total_user_count);
+        $data = [];
+        $statistics = Cache::remember('statistics', 60 * 15, function () {
+            return [
+                'UsersCount' => User::userRole()->count()
+            ];
+        });
+        $data['Users'] = ['count' => $statistics['UsersCount'], 'route' => route('users.index'), 'class' => 'bg-primary', 'icon' => 'fas fa-solid fa-users'];
+        $cards = $data;
+        return view('admin.dashboard',compact('title','cards'));
     }
 
     public function profile()
     {
         $title = 'Profile';
         $user = Auth::user();
-        return view('admin.profile',compact('title'))->with('user',$user);
+        $settings = Setting::where('status', 1)->get()->pluck('value', 'key')->toArray();
+        $settings['logo_image_url'] = (isset($settings['logo_image']) && $settings['logo_image'] != "" && File::exists(public_path($settings['logo_image']))) ? asset($settings['logo_image']) : asset('dist/img/default-150x150.png');
+        return view('admin.profile',compact('title','settings','user'));
     }
 
     public function updateAdminProfile(AdminProfileRequest $request)
@@ -61,6 +71,31 @@ class HomeController extends Controller
             return error('Something went wrong!',$e->getMessage());
         }
     }
+
+    public function saveSetting(AppSettingRequest $request)
+    {
+        try{
+            $userId = Auth::user()->id;
+            $validatedData = $request->validated(); 
+            foreach ($validatedData as $key => $value) {
+                if ($value != '') {
+                    if ($key == 'logo_image' && !empty($validatedData['logo_image'])) {
+                        $value =  imageUploader($validatedData['logo_image'],'uploads/home/',$isUrl = false,$storeAs='logo.'.$validatedData['logo_image']->extension());
+                    }
+                    Setting::updateOrCreate(['key' => $key], ['key' => $key, 'value' => $value]);
+                }
+            }
+            Cache::forget('app_setting');
+            Cache::rememberForever('app_setting', function () {
+                return collect(Setting::get());
+            });
+            return success('Settings Updated successfully.');
+            
+        } catch(Exception $e) {
+            return error('Something went wrong!',$e->getMessage());
+        }
+    }
+
     public function updatePassword(ChangePasswordRequest $request)
     {
         try{

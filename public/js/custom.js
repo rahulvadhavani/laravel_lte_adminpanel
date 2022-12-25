@@ -16,17 +16,20 @@ $(document).ready( function () {
     });
 });
 
-function load_preview_image(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            $("#preview_div").show();
-            $('#image_preview').attr('src', e.target.result);
-        };
-        reader.readAsDataURL(input.files[0]);
-    } else {
-      $("#preview_div").hide();
-    }
+function load_preview_image(input,div="preview_div",imgDiv='image_preview') {
+  let imgParentDiv = `#${div}`;
+  let imgPreiwDiv = `#${imgDiv}`;
+  console.log(imgParentDiv,imgPreiwDiv);
+  if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+          $(imgParentDiv).show();
+          $(imgPreiwDiv).attr('src', e.target.result);
+      };
+      reader.readAsDataURL(input.files[0]);
+  } else {
+    $(imgParentDiv).hide();
+  }
 }
 
 function Validateusername(evt) {

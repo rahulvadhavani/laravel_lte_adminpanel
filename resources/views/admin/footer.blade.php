@@ -1,14 +1,9 @@
-</div>
-</div>
-<!-- ./wrapper -->
-
 <!-- REQUIRED SCRIPTS -->
-
 <!-- jQuery -->
 <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
-
+<script src="{{asset('dist/js/theme-controll.js')}}"></script>
 <script src="{{asset('plugins/toastr/toastr.min.js') }}"></script>
 <script src="{{asset('js/jquery.validate.min.js')}}"></script>
 <!-- <script src="{{asset('plugins/jquery-validation/jquery.validate.min.js')}}"></script> -->
@@ -24,5 +19,3 @@
 <script src="{{asset('js/custom.js') }}"></script>
 <script src="{{asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 @stack('script')
-</body>
-</html>
