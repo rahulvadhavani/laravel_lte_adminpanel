@@ -170,7 +170,7 @@ $("#users_form").validate({
                 if (result.status) {
                     $('#users_form')[0].reset();
                     $("#modal-add-update").modal('hide');
-                    $('#example1').DataTable().ajax.reload();
+                    $('#data_table_main').DataTable().ajax.reload();
                     toastr.success(result.message);
                 } else {
                     toastr.error(result.message);

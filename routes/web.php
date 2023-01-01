@@ -26,6 +26,7 @@ Route::group(['prefix' => 'admin'],function(){
 Route::group(['middleware' => ['auth'],'prefix' => 'admin'], function () {
     Route::group(['controller' => UserController::class ], function () {
         Route::resource('users',UserController::class);
+        Route::post('users/delete-selected', [UserController::class,'deleteSelected'])->name('users.delete-selected');
         Route::get('check_email_dublicate', 'CheckEmailDublicate');
         Route::get('check_username_dublicate', 'CheckUsernameDublicate');
     });
