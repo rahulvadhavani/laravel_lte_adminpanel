@@ -22,9 +22,6 @@ class UserController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('actions', function ($row) use ($baseurl) {
-                    $deleteurl = route('users.destroy', $row->id);
-                    $vieweurl = route('users.show', $row->id);
-                    $url = url('/') . '/users/show/' . $row->id;
                     $url = "<div class='actions-a'>
                 <a class='btn-circle btn btn-dark btn-sm module_view_record' data-id='" . $row->id . "' data-url='" . $baseurl . "' title='View'><i class='text-info fas fa-eye'></i></a>
                 <a class='btn-circle btn btn-dark btn-sm module_edit_record' data-id='" . $row->id . "' data-url='" . $baseurl . "' title='Edit'><i class='text-warning far fa-edit'></i></a>
@@ -86,6 +83,7 @@ class UserController extends Controller
             if (empty($user)) {
                 return error('Invalid user details');
             }
+            $user->url =  url('admin/users');
             return success("Success", $user);
         } catch (\Exception $e) {
             return error('Something went wrong!', $e->getMessage());

@@ -7,7 +7,7 @@ Laravel based Admin boilerplate
 
 - Development ready admin panel
 - Development ready API with authentication with passport 
-- Adminlte 3.2, Laravel(9.11)
+- Adminlte 3.2, Laravel(10.1)
 - Darkmode with theme customization
 - Moduler code
 - No need to Intall node module
