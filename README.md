@@ -1,6 +1,6 @@
 # Laravel-lte-boilerplate
 
-Laravel based Admin boilerplate
+Laravel 10 based Admin boilerplate
 
 
 ## Features
